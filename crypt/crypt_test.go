@@ -25,11 +25,11 @@ func TestEncryptAndDecrypt(t *testing.T) {
 		decryptResult := Crypt(uint8(decrypt), uint8(secretKey), true)
 
 		if encryptResult != uint8(decrypt) {
-			t.Errorf("It should be %08b but got %08b", encryptResult, decryptResult)
+			t.Errorf("ENCRYPT: It should be %08b but got %08b", encryptResult, uint8(decrypt))
 		}
 
 		if uint8(msg) != decryptResult {
-			t.Errorf("It should be %08b but got %08b", encryptResult, decryptResult)
+			t.Errorf("DECRYPT: It should be %08b but got %08b", uint8(msg), decryptResult)
 		}
 	}
 }
