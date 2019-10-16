@@ -8,35 +8,44 @@ import (
 
 var (
 	operation = "S"
+	decrypt   = false
 	str       string
 	key       string
-	decrypt   = false
 )
 
 func main() {
-	//dataProvider()
-
-	str = "00000000"
-	key = "11100000"
-
-	//str = "01111000"
-	//key = "10110001"
-
-	//str = "11111010"
-	//key = "10101100"
+	dataProvider()
+	//def()
 
 	msg, _ := strconv.ParseInt(str, 2, 16)
 	secretKey, _ := strconv.ParseInt(key, 2, 16)
 
 	a := crypt.Crypt(uint8(msg), uint8(secretKey), decrypt)
 
-	fmt.Printf("%08b", a)
+	fmt.Printf("WYNIK: %08b (%0x)", a, a)
 }
 
 func def() {
-	str = "00000000"
+	//str = "00000000"
+	//key = "11100000"
+	// DECRYPT
+	//decrypt = true
+	//str = "01101100"
+	//key = "11100000"
+
 	//str = "01111000"
+	//key = "10110001"
+	// DECRYPT
+	//decrypt = true
+	//str = "11110111"
+	//key = "10110001"
+
 	//str = "11111010"
+	//key = "10101100"
+	// DECRYPT
+	decrypt = true
+	str = "11011111"
+	key = "10101100"
 }
 
 func dataProvider() {
@@ -45,7 +54,6 @@ func dataProvider() {
 	var _, err = fmt.Scan(&operation)
 
 	if err != nil || operation != "S" && operation != "D" {
-		fmt.Println(err)
 		panic("Wprowadzono nieprawidłową wartość.")
 	}
 
@@ -66,4 +74,6 @@ func dataProvider() {
 	if err != nil || len(key) != 8 {
 		panic("Wprowadzony klucz szyfrujący jest nieprawidłowy.")
 	}
+
+	fmt.Print("\n")
 }
