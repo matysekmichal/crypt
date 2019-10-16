@@ -31,22 +31,20 @@ func SBlock(i int, r uint8, secret uint8, decrypt bool) uint8 {
 }
 
 func RoundKeyGenerator(i int, secret uint8, decrypt bool) uint8 {
-	var (
-		l uint8
-		r uint8
-	)
-
-	l, r = secret>>4, secret&0xF
+	var l, r = secret >> 4, secret & 0xF
+	move := 1
 
 	if decrypt {
 		i = int(math.Abs(float64(i - 7)))
 	}
 
-	if i < 7 {
-		l, r = RotateLeft4(l, i), RotateLeft4(r, i)
-
-		secret = bits.RotateLeft8(l<<4|r, 1)
+	if i > 6 {
+		i -= 1
+		move += 1
 	}
+
+	l, r = RotateLeft4(l, i), RotateLeft4(r, i)
+	secret = bits.RotateLeft8(l<<3|r, move)
 
 	return secret
 }

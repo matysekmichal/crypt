@@ -14,8 +14,8 @@ var (
 )
 
 func main() {
-	dataProvider()
-	//def()
+	//dataProvider()
+	def()
 
 	msg, _ := strconv.ParseInt(str, 2, 16)
 	secretKey, _ := strconv.ParseInt(key, 2, 16)
@@ -30,22 +30,22 @@ func def() {
 	//key = "11100000"
 	// DECRYPT
 	//decrypt = true
-	//str = "01101100"
+	//str = "01111100"
 	//key = "11100000"
 
-	//str = "01111000"
-	//key = "10110001"
+	str = "01111000"
+	key = "10110001"
 	// DECRYPT
 	//decrypt = true
-	//str = "11110111"
+	//str = "11010111"
 	//key = "10110001"
 
 	//str = "11111010"
 	//key = "10101100"
 	// DECRYPT
-	decrypt = true
-	str = "11011111"
-	key = "10101100"
+	//decrypt = true
+	//str = "10001111"
+	//key = "10101100"
 }
 
 func dataProvider() {
