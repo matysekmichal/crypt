@@ -8,10 +8,10 @@ import (
 func Crypt(msg uint8, secretKey uint8, decrypt bool) uint8 {
 	left, right := msg>>4, msg&0xF
 
-	for i := 0; i < 8; i++ {
+	for i := 1; i <= 8; i++ {
 		left ^= SBlock(i, right, secretKey, decrypt)
 
-		if i < 7 {
+		if i < 8 {
 			left, right = right, left
 		}
 	}
@@ -35,8 +35,6 @@ func RoundKeyGenerator(i int, secret uint8, decrypt bool) uint8 {
 		l uint8
 		r uint8
 	)
-
-	i += 1
 
 	if decrypt {
 		i = int(math.Abs(float64(i - 9)))
