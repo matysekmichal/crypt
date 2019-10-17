@@ -19,8 +19,8 @@ func Crypt(msg uint8, secretKey uint8, decrypt bool) uint8 {
 	return left<<4 | right
 }
 
-func SBlock(i int, r uint8, secret uint8, decrypt bool) uint8 {
-	key := RoundKeyGenerator(i, secret, decrypt)
+func SBlock(iteration int, r uint8, secretKey uint8, decrypt bool) uint8 {
+	key := RoundKeyGenerator(iteration, secretKey, decrypt)
 
 	h1 := 1 ^ (r>>1)&1 ^ (r>>3)&1&(r>>2)&1 ^ (r>>2)&1&(r>>1)&1&r&1 ^ (r>>3)&1&(r>>2)&1&(r>>1)&1&r&1 ^ (key>>7)&1
 	h2 := 1 ^ (r>>3)&1&r&1 ^ (r>>3)&1&(r>>1)&1&r&1 ^ (r>>3)&1&(r>>2)&1&(r>>1)&1&r&1 ^ (key>>5)&1
@@ -30,28 +30,28 @@ func SBlock(i int, r uint8, secret uint8, decrypt bool) uint8 {
 	return h1<<3 | h2<<2 | h3<<1 | h4
 }
 
-func RoundKeyGenerator(i int, secret uint8, decrypt bool) uint8 {
+func RoundKeyGenerator(iteration int, secretKey uint8, decrypt bool) uint8 {
 	var (
-		l uint8
-		r uint8
+		left  uint8
+		right uint8
 	)
 
 	if decrypt {
-		i = int(math.Abs(float64(i - 9)))
+		iteration = int(math.Abs(float64(iteration - 9)))
 	}
 
-	for j := 0; j < i; j++ {
-		l, r = secret>>4, secret&0xF
+	for i := 0; i < iteration; i++ {
+		left, right = secretKey>>4, secretKey&0xF
 
-		if j%2 == 0 {
-			l, r = RotateLeft4(l, 1), RotateLeft4(r, 1)
-			secret = l<<4 | r
+		if i%2 == 0 {
+			left, right = RotateLeft4(left, 1), RotateLeft4(right, 1)
+			secretKey = left<<4 | right
 		} else {
-			secret = bits.RotateLeft8(secret, 1)
+			secretKey = bits.RotateLeft8(secretKey, 1)
 		}
 	}
 
-	return secret
+	return secretKey
 }
 
 func RotateLeft4(x uint8, k int) uint8 {
