@@ -22,6 +22,8 @@ func main() {
 	a := crypt.Crypt(uint8(msg), uint8(secretKey), decrypt)
 
 	fmt.Printf("WYNIK: %08b (%02X)", a, a)
+
+	_, _ = fmt.Scanln()
 }
 
 func dataProvider() {
